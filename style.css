@@ -156,28 +156,29 @@ body.bg-7{background:linear-gradient(135deg,#0a0a1a,#060818,#0a0a1a)}
 
 /* Mobile */
 @media(max-width:768px){
-  #sidebar{width:100%;min-height:auto;position:relative;flex-direction:row;flex-wrap:nowrap;overflow-x:auto;padding:6px 8px;gap:4px;z-index:10;background:rgba(0,0,0,0.85);-webkit-overflow-scrolling:touch}
+  body{flex-direction:column;overflow-x:hidden}
+  #sidebar{width:100%;min-height:auto;position:sticky;top:0;flex-direction:row;flex-wrap:nowrap;overflow-x:auto;padding:6px 8px;gap:4px;z-index:20;background:rgba(0,0,0,0.9);-webkit-overflow-scrolling:touch}
   #sidebar .side-title{display:none}
   #sidebar .album-card{flex-shrink:0;padding:6px 8px;gap:4px;min-height:44px;align-items:center}
   #sidebar .album-cover{width:30px;height:30px}
   #sidebar .album-info .an{font-size:10px}
   #sidebar .album-info .ay{display:none}
   #sidebar .now-playing{display:none}
-  #main-wrap{margin-left:0;padding:4px}
+  #main-wrap{flex:none;width:100%;margin-left:0;padding:4px;min-height:auto}
   #app{width:100%;padding:14px 10px;border-radius:12px}
   .opts{grid-template-columns:1fr}
   /* Touch-friendly buttons */
-  .btn,.obtn{min-height:44px;display:flex;align-items:center;justify-content:center;font-size:15px}
+  .btn,.obtn{min-height:44px;display:flex;align-items:center;justify-content:center;font-size:15px;white-space:normal;word-break:break-word}
   .obtn{text-align:center}
-  .btn.gold{font-size:16px}
+  .btn.gold{font-size:15px;padding:10px 12px}
   .sk{padding:6px 12px;min-height:36px;font-size:11px}
   .listen-btn{min-height:44px;padding:12px 28px;font-size:17px}
   /* Chat font — prevent iOS auto-zoom on input focus */
-  #chat-msgs{max-height:300px}
+  #chat-msgs{max-height:280px}
   .chat-msg-user span,.chat-msg-ai .ai-bubble{font-size:13px}
   /* Monster HP bar */
-  .mon .hpbar{width:auto;max-width:180px}
-  .mon .emoji{font-size:36px}
+  .mon .hpbar{width:auto;max-width:160px}
+  .mon .emoji{font-size:34px}
   /* Kanye avatar */
   .ye-av{width:48px;height:48px}
   .ye-dlg{font-size:12px}
@@ -192,6 +193,17 @@ body.bg-7{background:linear-gradient(135deg,#0a0a1a,#060818,#0a0a1a)}
   .sentence-built{min-height:40px}
   .sentence-built .placed{padding:8px 12px;font-size:14px;min-height:36px;display:flex;align-items:center}
   .word-tip::after{font-size:10px}
+  /* Floating damage — keep inside viewport */
+  .dmg-float{font-size:22px;max-width:80vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  /* Path cards */
+  .path-level{padding:10px}
+  .path-level b{font-size:13px}
+  /* Badge row */
+  .badge-row{gap:3px}
+  .badge{font-size:9px;padding:2px 6px}
+  .ach-badge{font-size:11px;padding:6px 10px}
+  /* Chart */
+  .stats-panel{font-size:11px;line-height:1.6}
 }
 /* Small phones */
 @media(max-width:480px){
