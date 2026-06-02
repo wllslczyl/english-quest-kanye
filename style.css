@@ -88,7 +88,7 @@ body.bg-7{background:linear-gradient(135deg,#0a0a1a,#060818,#0a0a1a)}
 .sk.off{opacity:.3;pointer-events:none}
 
 /* Quote */
-.quote{text-align:center;margin:10px 0;padding:10px 14px;background:rgba(255,215,0,0.06);border-radius:8px;font-size:13px;color:#ffd700;animation:fadeIn .5s;display:flex;flex-direction:column;align-items:center;gap:3px}
+.quote{text-align:center;margin:10px 0;padding:10px 14px;background:rgba(255,215,0,0.06);border-radius:8px;font-size:13px;color:#ffd700;animation:fadeIn .5s;display:flex;flex-direction:column;align-items:center;gap:3px;overflow-wrap:break-word;word-break:break-word}
 .quote .cn{font-size:11px;color:#aaa;font-style:normal}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
 

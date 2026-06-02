@@ -8,7 +8,7 @@ var _recentQ = []; // Recent questions to avoid repetition
 
 function renderMonsterSelect() {
   var html = '<div class="ye">'+AV+'<div><span class="ye-tag">KANYE WEST</span><div class="ye-dlg">Pick your opponent. Start small, build up. 🔥<br><span style="font-size:11px;color:#aaa;font-style:normal">选个对手吧。从简单的开始，慢慢升级。</span></div></div></div>'+
-    MONSTERS.map(function(m, i) { return '<button class="btn gold" data-i="'+i+'">'+m.e+' '+m.n+' '+m.cn+' | HP:'+m.hp+' | '+m.d+'</button>'; }).join('')+
+    MONSTERS.map(function(m, i) { return '<button class="btn gold" data-i="'+i+'" title="'+esc(m.d)+'">'+m.e+' '+m.n+' '+m.cn+' <span style="font-size:10px;color:#888">HP:'+m.hp+'</span></button>'; }).join('')+
     '<button class="btn" onclick="renderMenu()">Back</button>';
   renderApp(html);
   document.querySelectorAll('.btn.gold').forEach(function(b) { b.onclick = function() { startBattle(parseInt(this.dataset.i)); }; });
@@ -356,9 +356,11 @@ function submitAnswer(ca, chosen, btn) {
   }
   if (qb) qb.appendChild(qd);
   var btnNext = document.createElement('button'); btnNext.className = 'btn gold'; btnNext.textContent = '▶ Next'; btnNext.style.marginTop = '8px';
-  btnNext.onclick = function() { try { renderQuestion(); } catch(e) { renderMenu(); } };
+  btnNext.onclick = function() { if (window._submitting) return; window._submitting = true; try { renderQuestion(); } catch(e) { renderMenu(); } };
   if (qb) qb.appendChild(btnNext); else document.getElementById('app').appendChild(btnNext);
-  saveState();
+  // Debounce save to avoid micro-stutter on slow devices
+  if (window._saveTimer) clearTimeout(window._saveTimer);
+  window._saveTimer = setTimeout(saveState, 200);
 }
 
 function renderVictory() {

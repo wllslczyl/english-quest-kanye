@@ -38,7 +38,7 @@ var _mediaRecorder = null, _audioChunks = [], _isRecording = false;
 async function toggleRecord() {
   if (_isRecording) { stopRecording(); return; }
   try {
-    var stream = await navigator.mediaDevices.getUserMedia({audio:true});
+    var stream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});
     _audioChunks = [];
     _mediaRecorder = new MediaRecorder(stream, {mimeType:'audio/webm'});
     _mediaRecorder.ondataavailable = function(e) { if (e.data.size > 0) _audioChunks.push(e.data); };
