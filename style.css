@@ -156,14 +156,57 @@ body.bg-7{background:linear-gradient(135deg,#0a0a1a,#060818,#0a0a1a)}
 
 /* Mobile */
 @media(max-width:768px){
-  #sidebar{width:100%;min-height:auto;position:relative;flex-direction:row;flex-wrap:nowrap;overflow-x:auto;padding:6px 8px;gap:4px;z-index:10;background:rgba(0,0,0,0.85)}
+  #sidebar{width:100%;min-height:auto;position:relative;flex-direction:row;flex-wrap:nowrap;overflow-x:auto;padding:6px 8px;gap:4px;z-index:10;background:rgba(0,0,0,0.85);-webkit-overflow-scrolling:touch}
   #sidebar .side-title{display:none}
-  #sidebar .album-card{flex-shrink:0;padding:4px 6px;gap:4px}
-  #sidebar .album-cover{width:26px;height:26px}
+  #sidebar .album-card{flex-shrink:0;padding:6px 8px;gap:4px;min-height:44px;align-items:center}
+  #sidebar .album-cover{width:30px;height:30px}
   #sidebar .album-info .an{font-size:10px}
   #sidebar .album-info .ay{display:none}
   #sidebar .now-playing{display:none}
-  #main-wrap{margin-left:0;padding:6px}
-  #app{width:100%;padding:14px;border-radius:12px}
+  #main-wrap{margin-left:0;padding:4px}
+  #app{width:100%;padding:14px 10px;border-radius:12px}
   .opts{grid-template-columns:1fr}
+  /* Touch-friendly buttons */
+  .btn,.obtn{min-height:44px;display:flex;align-items:center;justify-content:center;font-size:15px}
+  .obtn{text-align:center}
+  .btn.gold{font-size:16px}
+  .sk{padding:6px 12px;min-height:36px;font-size:11px}
+  .listen-btn{min-height:44px;padding:12px 28px;font-size:17px}
+  /* Chat font — prevent iOS auto-zoom on input focus */
+  #chat-msgs{max-height:300px}
+  .chat-msg-user span,.chat-msg-ai .ai-bubble{font-size:13px}
+  /* Monster HP bar */
+  .mon .hpbar{width:auto;max-width:180px}
+  .mon .emoji{font-size:36px}
+  /* Kanye avatar */
+  .ye-av{width:48px;height:48px}
+  .ye-dlg{font-size:12px}
+  .ye-tag{font-size:10px}
+  /* Stats */
+  .stats{font-size:11px;gap:4px}
+  .st{padding:3px 6px}
+  /* Question */
+  .qtext{font-size:17px}
+  .spell-input{font-size:17px;padding:12px 8px}
+  .sentence-word{padding:8px 14px;min-height:40px;display:flex;align-items:center;font-size:14px}
+  .sentence-built{min-height:40px}
+  .sentence-built .placed{padding:8px 12px;font-size:14px;min-height:36px;display:flex;align-items:center}
+  .word-tip::after{font-size:10px}
+}
+/* Small phones */
+@media(max-width:480px){
+  #sidebar .album-card{padding:4px 6px}
+  #sidebar .album-cover{width:24px;height:24px}
+  #app{padding:10px 6px;border-radius:10px}
+  .btn,.obtn{font-size:14px;padding:10px 8px}
+  .btn.gold{font-size:15px}
+  .qtext{font-size:16px}
+  .mon .emoji{font-size:30px}
+  .ye-av{width:40px;height:40px}
+  .stats{font-size:10px}
+  .st{padding:2px 4px}
+  .quote{font-size:11px;padding:8px 10px}
+  .quote .cn{font-size:10px}
+  .opts{gap:4px}
+  .sentence-words{gap:4px}
 }

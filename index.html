@@ -2,8 +2,16 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Kanye English Quest</title>
+<meta name="description" content="Kanye English Quest — 通过战斗学习英语！Battle monsters with vocabulary, grammar, spelling, and listening.">
+<meta name="keywords" content="英语学习,English learning,Kanye West,游戏学英语,vocabulary game,ESL">
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Kanye EQ">
+<link rel="apple-touch-icon" href="kirby_kanye.png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -39,5 +47,12 @@
 <script src="chat.js"></script>
 <script src="review.js"></script>
 <script src="main.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(function(e) {
+    console.warn('SW registration failed:', e);
+  });
+}
+</script>
 </body>
 </html>

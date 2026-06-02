@@ -1,0 +1,23 @@
+{
+  "name": "Kanye English Quest",
+  "short_name": "Kanye EQ",
+  "description": "English learning game — battle monsters with vocabulary, grammar, spelling, and listening skills!",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#1a0a0a",
+  "theme_color": "#ffd700",
+  "lang": "zh",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "kirby_kanye.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "kirby_kanye.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
