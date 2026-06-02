@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kanye English Quest</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="stars" id="stars"></div>
+
+<div id="sidebar">
+  <div class="side-title">KANYE WEST</div>
+  <div id="album-list"></div>
+  <div class="now-playing" id="now-playing"></div>
+</div>
+
+<div id="main-wrap">
+  <div id="app"></div>
+</div>
+
+<!-- GSAP Animation Engine -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<!-- Config & Data -->
+<script src="config.js"></script>
+<script src="words.js"></script>
+<!-- Question data (split by difficulty, assembled by questions.js) -->
+<script src="questions_beginner.js"></script>
+<script src="questions_intermediate.js"></script>
+<script src="questions_advanced.js"></script>
+<script src="questions_expert.js"></script>
+<script src="questions.js"></script>
+
+<!-- Engine modules (order matters: audio first, then UI components, core last) -->
+<script src="audio.js"></script>
+<script src="sidebar.js"></script>
+<script src="battle.js"></script>
+<script src="chat.js"></script>
+<script src="review.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
