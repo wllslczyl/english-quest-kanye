@@ -1,5 +1,5 @@
 /* ===== Kanye English Quest — Service Worker ===== */
-var CACHE_NAME = 'kanye-eq-v1';
+var CACHE_NAME = 'kanye-eq-v2';
 
 // All local assets to pre-cache on install
 var LOCAL_ASSETS = [
@@ -69,31 +69,29 @@ function isLocalAsset(url) {
   return true;
 }
 
-// Fetch: cache-first for local assets, network-only for external
+// Fetch: stale-while-revalidate for local assets, network-only for external
 self.addEventListener('fetch', function(event) {
   var url = event.request.url;
 
   // Always go to network for API calls
   if (url.indexOf('api.deepseek.com') !== -1) return;
 
-  // For local assets: cache-first
+  // For local assets: stale-while-revalidate
+  // Serve from cache immediately, then update cache from network in background
   if (isLocalAsset(url)) {
     event.respondWith(
-      caches.match(event.request).then(function(cached) {
-        if (cached) return cached;
-        // Not in cache, fetch from network and add to cache
-        return fetch(event.request).then(function(response) {
-          if (!response || response.status !== 200) return response;
-          var clone = response.clone();
-          caches.open(CACHE_NAME).then(function(cache) {
-            cache.put(event.request, clone);
+      caches.open(CACHE_NAME).then(function(cache) {
+        return cache.match(event.request).then(function(cached) {
+          var fetchPromise = fetch(event.request).then(function(networkResponse) {
+            if (networkResponse && networkResponse.status === 200) {
+              cache.put(event.request, networkResponse.clone());
+            }
+            return networkResponse;
+          }).catch(function() {
+            // Network failed, will use cached version
           });
-          return response;
-        }).catch(function() {
-          // Offline and not cached — return a simple fallback
-          return new Response('Offline — please connect to the internet to load this page.', {
-            status: 503, statusText: 'Service Unavailable'
-          });
+          // Return cached immediately if available, otherwise wait for network
+          return cached || fetchPromise;
         });
       })
     );
