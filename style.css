@@ -157,8 +157,9 @@ body.bg-7{background:linear-gradient(135deg,#0a0a1a,#060818,#0a0a1a)}
 /* Mobile */
 @media(max-width:768px){
   body{flex-direction:column;overflow-x:hidden}
-  #sidebar{width:100%;min-height:auto;position:sticky;top:0;flex-direction:row;flex-wrap:nowrap;overflow-x:auto;padding:6px 8px;gap:4px;z-index:20;background:rgba(0,0,0,0.9);-webkit-overflow-scrolling:touch}
+  #sidebar{width:100%;min-height:auto;position:sticky;top:0;flex-direction:column;padding:6px 8px;gap:2px;z-index:20;background:rgba(0,0,0,0.9);-webkit-overflow-scrolling:touch}
   #sidebar .side-title{display:none}
+  #sidebar #album-list{display:flex;flex-direction:row;flex-wrap:nowrap;overflow-x:auto;gap:4px;-webkit-overflow-scrolling:touch}
   #sidebar .album-card{flex-shrink:0;padding:6px 8px;gap:4px;min-height:44px;align-items:center}
   #sidebar .album-cover{width:30px;height:30px}
   #sidebar .album-info .an{font-size:10px}
