@@ -356,7 +356,7 @@ function submitAnswer(ca, chosen, btn) {
   }
   if (qb) qb.appendChild(qd);
   var btnNext = document.createElement('button'); btnNext.className = 'btn gold'; btnNext.textContent = '▶ Next'; btnNext.style.marginTop = '8px';
-  btnNext.onclick = function() { if (window._submitting) return; window._submitting = true; try { renderQuestion(); } catch(e) { renderMenu(); } };
+  btnNext.onclick = function() { try { renderQuestion(); } catch(e) { renderMenu(); } };
   if (qb) qb.appendChild(btnNext); else document.getElementById('app').appendChild(btnNext);
   // Debounce save to avoid micro-stutter on slow devices
   if (window._saveTimer) clearTimeout(window._saveTimer);

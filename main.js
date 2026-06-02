@@ -148,15 +148,68 @@ function renderLearningPath() {
 }
 
 // ============================================================
-// WORD LIST
+// WORD LIBRARY — Category overview + detail views
 // ============================================================
+var WORD_CATEGORIES = [
+  { id:'vocab',     e:'📖', n:'Vocabulary',    cn:'词汇',  desc:'Word & phrase translations — daily expressions, slang, and academic terms' },
+  { id:'grammar',   e:'📐', n:'Grammar',       cn:'语法',  desc:'Sentence completion, tense practice, and dialogue patterns' },
+  { id:'spelling',  e:'✍️', n:'Spelling',      cn:'拼写',  desc:'Chinese-to-English spelling — write the words you hear and read' },
+  { id:'sentence',  e:'🔗', n:'Sentences',     cn:'连句',  desc:'Word ordering puzzles — rearrange scrambled words into correct sentences' },
+  { id:'listening', e:'🎧', n:'Listening',     cn:'听力',  desc:'Audio comprehension — listen to spoken English and pick the meaning' }
+];
+var DIFF_ORDER = ['beginner','intermediate','advanced','expert'];
+var DIFF_META = { beginner:{e:'🌸',n:'Beginner'}, intermediate:{e:'⭐',n:'Intermediate'}, advanced:{e:'💎',n:'Advanced'}, expert:{e:'🎓',n:'Expert'} };
+
 function renderWordList() {
-  var words = [];
-  for (var d in QQ) QQ[d].forEach(function(q) { if (q.t === 'vocab') { var m = q.q.match(/\"(.*?)\"/); words.push(m ? m[1]+' → '+q.a : q.q+' → '+q.a); }});
-  var uniq = [], seen = {}; words.forEach(function(w) { if (!seen[w]) { seen[w] = true; uniq.push(w); } });
-  var html = '<div class="ye">'+AV+'<div><span class="ye-tag">KANYE WEST</span><div class="ye-dlg">"I am not a fan of books." But this word list? Dope. 📚<br><span style="font-size:11px;color:#aaa;font-style:normal">"我不是书的粉丝。" 但这个单词本太炸了。</span></div></div></div>'+
-    '<div style="max-height:300px;overflow-y:auto;padding:8px;line-height:2.2">'+uniq.map(function(w) { return '<span style="display:inline-block;margin:3px;padding:4px 10px;background:rgba(255,215,0,0.06);border-radius:8px;font-size:14px">'+w+'</span>'; }).join('')+'</div>'+
-    '<button class="btn gold" onclick="renderMenu()" style="margin-top:10px">Back</button>';
+  var html = '<div class="ye">'+AV+'<div><span class="ye-tag">KANYE WEST</span><div class="ye-dlg">"I am not a fan of books." But this library? Dope. 📚<br><span style="font-size:11px;color:#aaa;font-style:normal">「我不是书的粉丝。」但这个图书馆太炸了。选个分类进去看看吧。</span></div></div></div>';
+  WORD_CATEGORIES.forEach(function(cat) {
+    // Count questions of this type across all levels
+    var count = 0; for (var d in QQ) count += QQ[d].filter(function(q) { return q.t === cat.id; }).length;
+    html += '<div class="path-level" style="cursor:pointer" data-cat="'+cat.id+'">'+
+      '<div style="display:flex;justify-content:space-between;align-items:center">'+
+        '<b style="color:#ffd700;font-size:15px">'+cat.e+' '+cat.n+' <span style="font-size:11px;color:#aaa">'+cat.cn+'</span></b>'+
+        '<span style="font-size:11px;color:#888">'+count+' items</span></div>'+
+      '<div style="font-size:12px;color:#aaa;margin-top:4px">'+cat.desc+'</div></div>';
+  });
+  html += '<button class="btn gold" onclick="renderMenu()" style="margin-top:10px">Back</button>';
+  renderApp(html);
+  document.querySelectorAll('.path-level[data-cat]').forEach(function(card) {
+    card.onclick = function() { fadeTo(function() { renderWordCategory(this.dataset.cat); }.bind(this)); };
+  });
+}
+
+function renderWordCategory(type) {
+  var cat = WORD_CATEGORIES.find(function(c) { return c.id === type; });
+  if (!cat) { renderWordList(); return; }
+  var html = '<div class="ye">'+AV+'<div><span class="ye-tag">KANYE WEST</span><div class="ye-dlg">'+cat.e+' '+cat.n+'<br><span style="font-size:11px;color:#aaa;font-style:normal">'+cat.desc+'</span></div></div></div>';
+
+  DIFF_ORDER.forEach(function(diff) {
+    var items = QQ[diff] ? QQ[diff].filter(function(q) { return q.t === type; }) : [];
+    if (items.length === 0) return;
+    var dm = DIFF_META[diff];
+    html += '<div style="margin:8px 0"><div style="font-size:13px;color:#ffd700;margin-bottom:6px">'+dm.e+' '+dm.n+' <span style="font-size:10px;color:#888">('+items.length+' items)</span></div>';
+    html += '<div style="display:flex;flex-wrap:wrap;gap:5px">';
+    items.forEach(function(q) {
+      var en = esc(q.q), cn = esc(q.a);
+      // Show useful content per type
+      if (type === 'vocab') {
+        html += '<span class="wl-chip" title="'+cn+'">'+en+' <span style="color:#ffd700;font-size:10px">→ '+cn+'</span></span>';
+      } else if (type === 'grammar') {
+        html += '<span class="wl-chip" title="A: '+en+'">'+en+' <span style="color:#ffd700;font-size:10px">→ '+cn+'</span></span>';
+      } else if (type === 'spelling') {
+        var prompt = en.replace('Spell the word: ','');
+        html += '<span class="wl-chip">'+esc(prompt)+' <span style="color:#4cd964;font-size:10px">→ '+cn+'</span></span>';
+      } else if (type === 'sentence') {
+        html += '<span class="wl-chip" title="Correct order">'+cn+'</span>';
+      } else if (type === 'listening') {
+        var speak = q.speak ? esc(q.speak) : '';
+        html += '<span class="wl-chip">🔊 '+speak+' <span style="color:#ffd700;font-size:10px">→ '+cn+'</span></span>';
+      }
+    });
+    html += '</div></div>';
+  });
+
+  html += '<button class="btn gold" onclick="renderWordList()" style="margin-top:12px">Back</button>';
   renderApp(html);
 }
 
