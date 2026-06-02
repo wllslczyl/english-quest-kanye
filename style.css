@@ -157,7 +157,7 @@ body.bg-7{background:linear-gradient(135deg,#0a0a1a,#060818,#0a0a1a)}
 /* Mobile */
 @media(max-width:768px){
   body{flex-direction:column;overflow-x:hidden}
-  #sidebar{width:100%;min-height:auto;position:sticky;top:0;flex-direction:column;padding:6px 8px;gap:2px;z-index:20;background:rgba(0,0,0,0.9);-webkit-overflow-scrolling:touch}
+  #sidebar{width:100%;min-height:auto;position:sticky;top:0;flex-direction:column;padding:6px 8px;gap:2px;z-index:20;background:rgba(0,0,0,0.9);-webkit-overflow-scrolling:touch;touch-action:manipulation}
   #sidebar .side-title{display:none}
   #sidebar #album-list{display:flex;flex-direction:row;flex-wrap:nowrap;overflow-x:auto;gap:4px;-webkit-overflow-scrolling:touch}
   #sidebar .album-card{flex-shrink:0;padding:6px 8px;gap:4px;min-height:44px;align-items:center}
@@ -172,7 +172,7 @@ body.bg-7{background:linear-gradient(135deg,#0a0a1a,#060818,#0a0a1a)}
   .btn,.obtn{min-height:44px;display:flex;align-items:center;justify-content:center;font-size:15px;white-space:normal;word-break:break-word}
   .obtn{text-align:center}
   .btn.gold{font-size:15px;padding:10px 12px}
-  .sk{padding:6px 12px;min-height:36px;font-size:11px}
+  .sk{padding:6px 12px;min-height:44px;font-size:11px}
   .listen-btn{min-height:44px;padding:12px 28px;font-size:17px}
   /* Chat font — prevent iOS auto-zoom on input focus */
   #chat-msgs{max-height:280px}

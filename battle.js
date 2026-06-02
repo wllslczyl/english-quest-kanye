@@ -243,11 +243,11 @@ function renderQuestion() {
 
   renderApp(html);
   window._submitting = false;
-  document.getElementById('btn-fl').onclick = function() { document.removeEventListener('keydown', window._battleKey); window._battleKey = null; S.inBat = false; S.streak = 0; saveState(); renderMenu(); };
+  document.getElementById('btn-fl').onclick = function() { document.removeEventListener('keydown', window._battleKey); window._battleKey = null; S.inBat = false; S.streak = 0; saveState(); fadeTo(renderMenu); };
 
   // Keyboard shortcuts for battle
   window._battleKey = function(e) {
-    if (e.key === 'Escape') { window._battleKey = null; S.inBat = false; S.streak = 0; saveState(); renderMenu(); return; }
+    if (e.key === 'Escape') { window._battleKey = null; S.inBat = false; S.streak = 0; saveState(); fadeTo(renderMenu); return; }
     if (e.key >= '1' && e.key <= '4') { var opts = document.querySelectorAll('.obtn:not(:disabled)'); var idx = parseInt(e.key) - 1; if (opts[idx]) opts[idx].click(); }
     if (e.key === 'Enter') { var ss = document.getElementById('spell-submit'); if (ss) { ss.click(); return; } var se = document.getElementById('sentence-submit'); if (se) se.click(); }
   };
@@ -362,6 +362,7 @@ function submitAnswer(ca, chosen, btn) {
 }
 
 function renderVictory() {
+  window.scrollTo(0,0);
   S.inBat = false; S.wins++; var m = MONSTERS[S.monIdx]; var xp = diffXP() + Math.floor(Math.random()*6);
   if (m.boss) { xp += 15; S.bossKills = (S.bossKills||0) + 1; }
   addXp(xp); S.hp = Math.min(S.mhp, S.hp + BALANCE.HEAL_ON_WIN); sfx('win'); saveState();
@@ -381,6 +382,7 @@ function renderVictory() {
 }
 
 function renderDefeat() {
+  window.scrollTo(0,0);
   S.inBat = false; S.losses++; S.hp = Math.floor(S.mhp * BALANCE.DEFEAT_HP_RESTORE); sfx('lose'); saveState();
   var lq = randQuote('lose');
   var html = '<div class="ye">'+AV+'<div><span class="ye-tag">KANYE WEST</span><div class="ye-dlg">'+lq[0]+'</div></div></div>'+

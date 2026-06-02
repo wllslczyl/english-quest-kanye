@@ -120,7 +120,7 @@ function renderMenu() {
     '<button class="btn" id="btn-mute" style="font-size:18px;padding:6px 10px;width:auto;display:inline-block">'+(typeof _muted !== 'undefined' && _muted ? '🔇' : '🔊')+'</button>';
 
   renderApp(html);
-  document.getElementById('btn-r').onclick = function() { if (confirm('Reset all progress?')) { localStorage.removeItem('eq_v8'); localStorage.removeItem('eq_apikey'); location.reload(); } };
+  document.getElementById('btn-r').onclick = function() { if (confirm('Reset all progress?')) { localStorage.removeItem('eq_v8'); localStorage.removeItem('eq_apikey'); localStorage.removeItem('eq_weak'); location.reload(); } };
   document.getElementById('btn-mute').onclick = function() { var muted = toggleMute(); this.textContent = muted ? '🔇' : '🔊'; };
   document.querySelectorAll('.sk[data-s]').forEach(function(sk) { sk.onclick = function() { useSkill(this.dataset.s, parseInt(this.dataset.c)); }; });
 }

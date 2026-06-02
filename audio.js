@@ -60,3 +60,14 @@ function stopRecording() {
   var mic = document.getElementById('chat-mic');
   if (mic) { mic.textContent = '🎤'; mic.style.background = 'rgba(255,215,0,0.1)'; mic.style.borderColor = 'rgba(255,215,0,0.3)'; }
 }
+
+// iOS Safari freezes AudioContext until user gesture — resume on first touch/click
+(function _resumeOnGesture() {
+  function resume() {
+    if (actx && actx.state === 'suspended') actx.resume();
+    document.removeEventListener('touchend', resume);
+    document.removeEventListener('click', resume);
+  }
+  document.addEventListener('touchend', resume);
+  document.addEventListener('click', resume);
+})();
