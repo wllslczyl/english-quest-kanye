@@ -19,6 +19,7 @@ var LOCAL_ASSETS = [
   'chat.js',
   'review.js',
   'main.js',
+  'gsap.min.js',
   'kirby_kanye.png',
   'manifest.json',
   // Album covers

@@ -51,7 +51,16 @@ async function toggleRecord() {
     _mediaRecorder.start(); _isRecording = true;
     var mic = document.getElementById('chat-mic');
     if (mic) { mic.textContent = '🔴'; mic.style.background = 'rgba(255,68,68,0.3)'; mic.style.borderColor = '#ff4444'; }
-  } catch(e) { alert('Cannot access microphone. Check browser permissions.'); }
+  } catch(e) {
+    var mic = document.getElementById('chat-mic');
+    if (mic) { mic.textContent = '🚫'; mic.title = 'Microphone blocked. Check browser site permissions.'; mic.style.background = 'rgba(255,68,68,0.3)'; mic.style.borderColor = '#ff4444'; }
+    // Show inline toast
+    var t = document.createElement('div');
+    t.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(255,68,68,0.9);color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;z-index:200;white-space:nowrap';
+    t.textContent = '🎤 Mic blocked — check browser permissions';
+    document.body.appendChild(t);
+    setTimeout(function() { t.style.opacity = '0'; t.style.transition = 'opacity 0.5s'; setTimeout(function() { t.remove(); }, 500); }, 3000);
+  }
 }
 
 function stopRecording() {

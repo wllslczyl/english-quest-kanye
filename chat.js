@@ -10,10 +10,10 @@ function renderChatScenes() {
   document.querySelectorAll('.btn.gold').forEach(function(b) { b.onclick = function() { startChat(parseInt(this.dataset.i)); }; });
 }
 
-function startChat(idx) {
+async function startChat(idx) {
   _chatScene = idx; _chatMsgs = [{role:'assistant', text:CHAT_SCENES[idx].prompt}];
   S.chatCount = (S.chatCount||0) + 1;
-  if (!API.hasKey()) { API.promptKey(); }
+  if (!API.hasKey()) { await API.promptKey(); }
   renderChatUI();
 }
 
@@ -78,7 +78,7 @@ function renderChatUI() {
       tn.textContent = localCN; parent.appendChild(tn); el.remove();
       return;
     }
-    if (!API.hasKey()) { if (!API.promptKey()) { el.textContent = '!'; return; } }
+    if (!API.hasKey()) { var ok = await API.promptKey(); if (!ok) { el.textContent = '!'; return; } }
     el.textContent = '...'; el.style.pointerEvents = 'none';
     try {
       var resp = await fetch('https://api.deepseek.com/v1/chat/completions', {
@@ -105,7 +105,7 @@ async function sendChat() {
   _chatMsgs.push({role:'user', text:text}); _chatMsgs.push({role:'assistant', text:''}); renderChatUI();
 
   try {
-    if (!API.hasKey()) { API.promptKey(); if (!API.hasKey()) { _chatMsgs.pop(); _chatMsgs.push({role:'assistant', text:'API key not set. Get one at platform.deepseek.com'}); renderChatUI(); inp.disabled = false; document.getElementById('chat-send').disabled = false; return; }}
+    if (!API.hasKey()) { await API.promptKey(); if (!API.hasKey()) { _chatMsgs.pop(); _chatMsgs.push({role:'assistant', text:'API key not set. Get one at platform.deepseek.com'}); renderChatUI(); inp.disabled = false; document.getElementById('chat-send').disabled = false; return; }}
     var s = CHAT_SCENES[_chatScene];
     var msgs = [{role:'system', content:s.sys+' User is learning English. Keep responses SHORT (1-2 sentences). Be encouraging.'}];
     for (var i = 0; i < _chatMsgs.length - 1; i++) msgs.push({role:_chatMsgs[i].role, content:_chatMsgs[i].text});

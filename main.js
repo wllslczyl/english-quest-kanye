@@ -175,6 +175,8 @@ function renderWordList() {
   renderSidebar(); renderMenu();
   document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && !S.inBat) { renderMenu(); }});
   window.addEventListener('beforeunload', saveState);
+  document.addEventListener('visibilitychange', function() { if (document.hidden) saveState(); });
+  window.addEventListener('pagehide', saveState);
   window.addEventListener('error', function(e) {
     console.error('Global error:', e.error || e.message);
     if (!S.inBat) { safeRender(renderMenu); }

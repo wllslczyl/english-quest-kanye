@@ -13,13 +13,48 @@ var API = {
     return !!this.getKey();
   },
   promptKey: function() {
-    var k = prompt(
-      'Enter your DeepSeek API key to enable AI Chat.\n\n' +
-      'Get one free at: https://platform.deepseek.com\n\n' +
-      '(Leave empty to use text-only mode)'
-    );
-    if (k && k.trim()) { this.setKey(k.trim()); return true; }
-    return false;
+    var self = this;
+    return new Promise(function(resolve) {
+      if (self.hasKey()) { resolve(true); return; }
+      // Remove existing modal if any
+      var old = document.getElementById('api-key-overlay');
+      if (old) old.remove();
+      // Build modal overlay
+      var overlay = document.createElement('div');
+      overlay.id = 'api-key-overlay';
+      overlay.innerHTML =
+        '<div class="ak-card">'+
+          '<div class="ak-title">🔑 API Key</div>'+
+          '<div class="ak-desc">Enter your <b>DeepSeek</b> API key to enable AI Chat.<br>'+
+            'Get one free at: <a href="https://platform.deepseek.com" target="_blank" rel="noopener" style="color:#ffd700">platform.deepseek.com</a></div>'+
+          '<input class="ak-input" type="password" placeholder="sk-..." autocomplete="off">'+
+          '<div class="ak-btns">'+
+            '<button class="ak-save">💾 Save & Chat</button>'+
+            '<button class="ak-skip">Skip (text-only)</button>'+
+          '</div>'+
+        '</div>';
+      document.body.appendChild(overlay);
+      var inp = overlay.querySelector('.ak-input');
+      setTimeout(function() { inp.focus(); }, 100);
+      // Save handler
+      overlay.querySelector('.ak-save').onclick = function() {
+        var k = inp.value.trim();
+        if (k) { self.setKey(k); }
+        overlay.remove(); resolve(!!k);
+      };
+      // Skip handler
+      overlay.querySelector('.ak-skip').onclick = function() {
+        overlay.remove(); resolve(false);
+      };
+      // Enter key in input
+      inp.onkeydown = function(e) {
+        if (e.key === 'Enter') { overlay.querySelector('.ak-save').click(); }
+      };
+      // Click outside to dismiss
+      overlay.onclick = function(e) {
+        if (e.target === overlay) { overlay.querySelector('.ak-skip').click(); }
+      };
+    });
   }
 };
 
